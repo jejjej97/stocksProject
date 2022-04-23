@@ -86,17 +86,64 @@
 <!--</script>-->
 
 <script>
-    function loading(){
+//관심 종목 등록
+function insert() {
+    var formData = $('#form_insert').serialize()
+    console.log(formData)
+    $.ajax({
+        url: "bookmark_insert",
+        type: "POST",
+        cache: false,
+        data: formData,
+        success: function(data){
+            if(data == "ok"){
+                alert("관심 종목 담기 완료.");
+            }else{
+                alert("이미 등록된 관심 종목입니다.");
+            }
+        },
+        error: function(jqXHR, textstatus, errorthrown){
+            console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown)
+        }
+    })
+}
+</script>
+<script>
+//관심 종목 삭제
+function del() {
+    var formData = $('#form_delete').serialize()
+    console.log(formData)
+    $.ajax({
+        url: "bookmark_delete",
+        type: "POST",
+        cache: false,
+        data: formData,
+        success: function(data){
+            if(data == "ok"){
+                alert("관심 종목 삭제 완료.");
+            }else{
+                alert("관심 등록되지 않은 종목입니다.");
+            }
+        },
+        error: function(jqXHR, textstatus, errorthrown){
+            console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown)
+        }
+    })
+}
+</script>
+<script>
+//주가 예측 대기
+function loading(){
 
-        var output1 = '';
-        var output2 = '';
+    var output1 = '';
+    var output2 = '';
 
-        output1 += '<img style="width:300px; height:300px;" src="static/img/loading.gif">'
-        output2 += '딥러닝(LSTM) 학습중... 주가 예측 분석 소요시간 약 5분내외로 예상되오니 잠시만 기다려주십시오.'
+    output1 += '<img style="width:300px; height:300px;" src="static/img/loading.gif">'
+    output2 += '딥러닝(LSTM) 학습중... 주가 예측 분석 소요시간 약 5분내외로 예상되오니 잠시만 기다려주십시오.'
 
-        document.getElementById("loadingimg").innerHTML = output1;
-        document.getElementById("loadingmsg").innerHTML = output2;
-    }
+    document.getElementById("loadingimg").innerHTML = output1;
+    document.getElementById("loadingmsg").innerHTML = output2;
+}
 </script>
 {% if detailm != None %}
     {% include detailm %}
@@ -118,15 +165,17 @@
                             {% else %}
                             <h1 style="color:black; text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;">
                                 {{i.name}}
-                                <form action="bookmark_insert" method="post" style="display:inline">
+                                <form id="form_insert" name="form_insert" method="POST" style="display:inline">
                                 {% csrf_token %}
-                                <button class="btn btn-primary" value="{{i.url}}" type="submit" name="bookmarkurl" >관심 종목 담기</button>
-                                <input style="background:none; width:800px; border:0px;" type="hidden" value="{{i.name}}" name="bookmarkstockname"/>
+                                    <input style="background:none; width:800px; border:0px;" type="hidden" value="{{i.name}}" name="bookmarkstockname_insert"/>
+                                    <input style="background:none; width:800px; border:0px;" type="hidden" value="{{i.url}}" name="bookmarkurl_insert"/>
+                                    <input class="btn btn-primary" type="button" onclick="insert(); return false" value="관심 종목 담기">
                                 </form>
-                                <form action="bookmark_delete" method="post" style="display:inline">
+                                <form id="form_delete" name="form_delete" method="POST" style="display:inline">
                                 {% csrf_token %}
-                                <button class="btn btn-primary" value="{{i.name}}" type="submit" name="bookmarkname" >관심 종목 삭제</button>
-                                <input style="background:none; width:800px; border:0px;" type="hidden" value="{{i.url}}" name="bookmarkstockurl"/>
+                                    <input style="background:none; width:800px; border:0px;" type="hidden" value="{{i.name}}" name="bookmarkstockname_delete"/>
+                                    <input style="background:none; width:800px; border:0px;" type="hidden" value="{{i.url}}" name="bookmarkurl_delete"/>
+                                    <input class="btn btn-primary" type="button" onclick="del(); return false" value="관심 종목 삭제">
                                 </form>
                             </h1>
                             {% endif %}
