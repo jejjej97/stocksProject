@@ -1,0 +1,23 @@
+<!--<script>-->
+<!--alert('예측 데이터가 불충분하여 주가 예측에 실패했습니다.')-->
+<!--</script>-->
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <br>
+            <h2>{{name}}</h2>
+            <figure class="highcharts-figure">
+            <div id="container"></div>
+              <p class="highcharts-description">
+                <h3 style="color:red;">예측 데이터가 불충분하여 주가 예측에 실패했습니다.</h3>
+              </p>
+            </figure>
+            <input id="name" value="{{name}}" style="visibility:hidden">
+            <input id="real" value="{{real}}" style="visibility:hidden">
+            <input id="predict" value="{{predict}}" style="visibility:hidden">
+            <input id="y" value="{{y}}" style="visibility:hidden">
+            <input id="m" value="{{m}}" style="visibility:hidden">
+            <input id="d" value="{{d}}" style="visibility:hidden">
+        </div>
+    </main>
+</div>

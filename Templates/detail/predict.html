@@ -1,0 +1,116 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <br>
+            <h2>{{name}} 주가 예측 결과 그래프</h2>
+            <figure class="highcharts-figure">
+            <div id="container"></div>
+              <p class="highcharts-description">
+                <h3>주가 예측 분석 소요 시간 : 약 {{runtime}}초</h3>
+                <h3 style="color:red;">* 주의 : 실제 투자에 참고하지 마세요.</h3>
+              </p>
+            </figure>
+            <input id="name" value="{{name}}" style="visibility:hidden">
+            <input id="real" value="{{real}}" style="visibility:hidden">
+            <input id="predict" value="{{predict}}" style="visibility:hidden">
+            <input id="y" value="{{y}}" style="visibility:hidden">
+            <input id="m" value="{{m}}" style="visibility:hidden">
+            <input id="d" value="{{d}}" style="visibility:hidden">
+        </div>
+    </main>
+</div>
+
+<script>
+function predict_display(data){
+
+    var real = data.shift();
+    var predict = data.shift();
+    var y = data.shift();
+    var m = data.shift();
+    var d = data.shift();
+
+    Highcharts.chart('container', {
+      chart: {
+        type: 'spline',
+        scrollablePlotArea: {
+          minWidth: 600,
+          scrollPositionX: 1
+        }
+      },
+      title: {
+        text: '예측 모델 : LSTM / 분석 근거 : 주가 주기',
+        align: 'left'
+      },
+      subtitle: {
+        text: '',
+        align: 'left'
+      },
+      xAxis: {
+        type: 'datetime',
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      yAxis: {
+        title: {
+          text: '주가(표준화 값)'
+        },
+        minorGridLineWidth: 0,
+        gridLineWidth: 0,
+        alternateGridColor: null,
+      },
+      tooltip: {
+        valueSuffix: '정규화값'
+      },
+      plotOptions: {
+        spline: {
+          lineWidth: 4,
+          states: {
+            hover: {
+              lineWidth: 5
+            }
+          },
+          marker: {
+            enabled: false
+          },
+          pointInterval: 3600000*24*30,
+          pointStart: Date.UTC(y, m, d, 0, 0, 0)
+        }
+      },
+      series: [{
+        name: '실제 주가',
+        data: real
+
+      }, {
+        name: '예측 주가',
+        data: predict
+      }],
+      navigation: {
+        menuItemStyle: {
+          fontSize: '10px'
+        }
+      }
+    });
+};
+
+function predict_getdata(n){
+    $.ajax({
+        url:'predict_graph',
+        data:{'name':n},
+        success:function(data){
+            predict_display(data);
+        }
+    });
+};
+
+$(document).ready(function(){
+    var name = $('#name').val()
+    predict_getdata(name);
+});
+</script>

@@ -1,0 +1,79 @@
+<!-- json type -->
+
+<!--<script>-->
+
+<!--    function getdata(){-->
+<!--        $.ajax({-->
+<!--          url:'newsmenu_crowling',-->
+<!--          success:function(data){-->
+<!--            display(data),-->
+<!--            totalData = data.data.length-->
+<!--          }-->
+<!--        });-->
+<!--    };-->
+
+<!--    $(document).ready(function(){-->
+<!--        getdata();-->
+<!--    });-->
+
+<!--    function display(data){-->
+<!--        var output = '';-->
+
+<!--&lt;!&ndash;        output += '<thead>' + '<tr>' + '<th>'&ndash;&gt;-->
+<!--&lt;!&ndash;        output += '뉴스 기사 제목'&ndash;&gt;-->
+<!--&lt;!&ndash;        output += '</th>' + '</tr>' + '</thead>'&ndash;&gt;-->
+<!--&lt;!&ndash;        output += '<tbody>'&ndash;&gt;-->
+<!--        for(var i in data){-->
+<!--            output += '<tr>'-->
+<!--            output += '<th>'-->
+<!--            output += '<a href = "'-->
+<!--            output += data[i].url-->
+<!--            output += '">'-->
+<!--            output += data[i].title-->
+<!--            output += '</a>'-->
+<!--            output += '</th>'-->
+<!--            output += '</tr>'-->
+<!--        }-->
+<!--&lt;!&ndash;        output += '</tbody>'&ndash;&gt;-->
+
+<!--&lt;!&ndash;        document.getElementById("datatablesSimple").innerHTML = output;&ndash;&gt;-->
+<!--        $("tbody").html(output)-->
+<!--    }-->
+
+<!--</script>-->
+<!--메인 시작-->
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 style="color:black; text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;" class="mt-4">증권 뉴스</h1>
+                        <ol class="breadcrumb mb-4">
+                        </ol>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                뉴스 메뉴
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center">제목</th>
+                                            <th style="text-align:center">언론사</th>
+                                            <th style="text-align:center">등록 날짜/시간</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in itemlist %}
+                                        <tr>
+                                            <td><a href="{{i.link}}" target="_blank">{{i.title}}</a></td>
+                                            <td>{{i.press}}</td>
+                                            <td>{{i.dtime}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
