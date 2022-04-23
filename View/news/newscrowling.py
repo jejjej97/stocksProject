@@ -17,7 +17,7 @@ def allnews_crowling():
     newsdao = NewsDAO('shop');
 
     # 뉴스 계속 업로드 시키려면 아래 구문 삭제
-    newsdao.delete();  # 이전 내용 삭제
+    # newsdao.delete();  # 이전 DB 기록된 뉴스 삭제
 
     # 당일 날짜 url :
     # https://finance.naver.com/news/news_list.naver?mode=LSS2D&section_id=101&section_id2=258
@@ -26,7 +26,9 @@ def allnews_crowling():
 
     ## 날짜 추출 : &date=
     time = datetime.now()
-    for i in range(3):  # 범위 숫자를 1000으로 바꾸면 1000일전까지 크롤링 가능
+    # 뉴스 자료가 방대하므로 위해 10일 뉴스 분량만 DB에 기록해놓음
+    # for i in range(10):  # 범위 숫자를 1000으로 바꾸면 '코드 실행일 ~ 1000일' 까지 크롤링 가능
+    for i in range(0):
         day1 = time - timedelta(days=i)
         day2 = day1.isoformat()
         day_y = day2[:4]
