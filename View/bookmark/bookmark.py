@@ -4,13 +4,10 @@ import json
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from home.main import key_search
 from View.detail.detail_crowling import detail_crowling
 from View.detail.detailstocksvo import detailstocksvo
 from Model.bookmark.bookmarkdao.bookmarkdao import bookmarkDAO
-from Model.bookmark.bookmarksql.bookmarksql import bookmarkSql
 from Model.bookmark.bookmarkvo.bookmarkvo import bookmarkVO
-from Model.news.newsdao.newsdao import NewsDAO
 from Model.sqlitedao import SqliteDao
 
 sqlitedao = SqliteDao('shop');

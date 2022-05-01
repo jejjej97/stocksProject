@@ -1,17 +1,14 @@
 import json
 
-import bs4
-import requests
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from home.main import key_search
 from View.all_stock import all_stock_crowling, up_stock_crowling, down_stock_crowling
-from home.main.kos_crowling import crowlpi_toss, crowldaq_toss
+from View.home.kos_crowling import crowlpi_toss, crowldaq_toss
 from View.all_stock.top_search_stocks_crowling import top_search_stocks_crowling
 from View.detail.detail_crowling import detail_crowling
 from View.detail.predict import stock_predict
-from View.home import homestocks
+from View.home import homestocks, key_search
 from View.detail.detailstocksvo import detailstocksvo
 from Model.news.newsdao.newsdao import NewsDAO
 
@@ -98,7 +95,15 @@ def kosdaq_down_stocks(r):
 def top_search(r):
     keyword = r.POST['search']
     data = key_search.search(keyword)
+    print(data)
     try:
+        if data == None:
+            context = {
+                'center': 'top_search.html',
+                'center2': 'search_error2.html',
+            }
+            return render(r, 'index.html', context)
+
         if type(data) == str:
             last = []
             ## 주식 정보 크롤링 ##
