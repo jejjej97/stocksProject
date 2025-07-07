@@ -33,7 +33,7 @@ def homestocks():
         name = list[0][n + 2].strip()
         price = list[0][n + 3].strip()
         udprice1 = list[0][n + 4].strip()
-        rate = list[0][n + 5].strip()
+        rate = list[0][n + 7].strip()
         udprice2 = rate[0] + udprice1[3:]
         sign = rate[0]
         num = i + 1
@@ -41,7 +41,7 @@ def homestocks():
         data = homestocksvo(num, url[i], name, price, udprice2, rate, sign)
         # data2 = num, url[i], name, price, udprice2, rate, sign
 
-        n += 6
+        n += 10
 
         items.append(data)
         # items2.append(data2)
