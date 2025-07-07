@@ -7,7 +7,7 @@ def detail_crowling(url):
     # for i in url():
     # 상세 페이지 크롤링 시작
     req = requests.get(url)
-    detailstocks1 = req.content.decode('euc-kr', 'replace')
+    detailstocks1 = req.content.decode('utf-8', 'replace')
     detailstocks2 = bs4.BeautifulSoup(detailstocks1, 'html.parser')
     detailstocks3 = detailstocks2.find('div', class_="new_totalinfo")
     detailstocks4 = detailstocks3.find_all('dd')
